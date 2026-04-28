@@ -41,10 +41,10 @@ jobs:
           retention-days: 7
 
       - name: 6. Commit and Push Changes to Repo
+        if: github.actor != 'github-actions[bot]'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add preprocessing/predictive_maintenance_preprocessing/
-          # || echo... mencegah error jika tidak ada perubahan data
           git commit -m "Auto-update: Dataset preprocessing via GitHub Actions" || echo "No changes to commit"
           git push
