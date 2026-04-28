@@ -50,8 +50,7 @@ def preprocess_data(df, scaler_save_path):
     scaler = RobustScaler()
     X_scaled = pd.DataFrame(scaler.fit_transform(X), columns=X.columns)
 
-    # [PENTING UNTUK KRITERIA 4] Menyimpan Scaler untuk Inference/Monitoring
-    # Pastikan folder tujuan tersedia
+    # Menyimpan Scaler untuk Inference/Monitoring
     os.makedirs(os.path.dirname(scaler_save_path), exist_ok=True)
     joblib.dump(scaler, scaler_save_path)
     print(f" -> [AMANKAN] Objek Scaler berhasil disimpan di {scaler_save_path}")
@@ -67,10 +66,11 @@ def save_data(df, output_path):
     print(f"Data siap latih tersimpan di {output_path}")
 
 if __name__ == "__main__":
-    # Tentukan path (Asumsi script dijalankan dari root repository oleh GitHub Actions)
-    RAW_DATA_PATH = os.path.join(BASE_DIR,"predictive_maintenance_raw", "predictive_maintenance.csv")
-    CLEAN_DATA_PATH = os.path.join(BASE_DIR,"preprocessing", "predictive_maintenance_preprocessing", "predictive_maintenance_processed.csv")
-    SCALER_PATH = os.path.join(BASE_DIR,"preprocessing", "predictive_maintenance_preprocessing", "scaler.pkl")
+    # Tentukan path secara dinamis
+    PROJECT_ROOT = os.path.dirname(BASE_DIR)
+    RAW_DATA_PATH = os.path.join(PROJECT_ROOT, "predictive_maintenance_raw", "predictive_maintenance.csv")
+    CLEAN_DATA_PATH = os.path.join(BASE_DIR, "predictive_maintenance_preprocessing", "predictive_maintenance_processed.csv")
+    SCALER_PATH = os.path.join(BASE_DIR, "predictive_maintenance_preprocessing", "scaler.pkl")
 
     # Eksekusi Pipeline
     try:
